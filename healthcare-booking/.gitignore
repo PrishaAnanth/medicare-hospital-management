@@ -1,0 +1,32 @@
+# Node modules
+frontend/node_modules/
+node_modules/
+.npm/
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+.env
+
+# Database files
+*.db
+*.sqlite3
+healthcare.db
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Local build / coverage
+dist/
+build/
+coverage/
+.nyc_output/
