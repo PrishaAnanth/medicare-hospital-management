@@ -23,7 +23,12 @@ export default function BookingForm() {
         const res = await client.get('/doctors/');
         setDoctors(res.data);
         if (res.data.length > 0) {
-          setDoctorId(preSelectedDocId || res.data[0].id.toString());
+          let initialDocId = preSelectedDocId;
+          if (!initialDocId) {
+            const firstAvailable = res.data.find(d => d.is_available);
+            initialDocId = firstAvailable ? firstAvailable.id.toString() : res.data[0].id.toString();
+          }
+          setDoctorId(initialDocId);
         }
       } catch (err) {
         console.error(err);
@@ -41,7 +46,7 @@ export default function BookingForm() {
     const fetchAvailability = async () => {
       try {
         const doc = doctors.find(d => d.id === parseInt(doctorId));
-        if (!doc) return;
+        if (!doc || !doc.is_available) return;
 
         const res = await client.get(`/doctors/${doctorId}/booked_slots?date=${date}`);
         const bookedISOs = res.data.map(iso => new Date(iso).getHours());
@@ -133,6 +138,7 @@ export default function BookingForm() {
               value={date}
               onChange={e => setDate(e.target.value)}
               min={new Date().toISOString().split('T')[0]}
+              disabled={!doctors.find(d => Number(d.id) === Number(doctorId))?.is_available}
               required
             />
           </div>
