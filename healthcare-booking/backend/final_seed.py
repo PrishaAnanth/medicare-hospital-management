@@ -7,12 +7,11 @@ print(f"Connecting to {db_path} for Final Master Seed...")
 
 db = sqlite3.connect(db_path)
 try:
-    # 1. Clear tables for a fresh fleet
+    
     db.execute("DELETE FROM feedbacks")
     db.execute("DELETE FROM appointments")
     db.execute("DELETE FROM doctors")
-    
-    # 2. Seed Master Fleet (Centrally Managed)
+ 
     doctors = [
         ('Dr. Smrithi', 'Cardiologist', 9, 17),
         ('Dr. Aryan', 'Neurologist', 10, 18),
